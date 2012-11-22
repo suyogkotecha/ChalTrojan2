@@ -32,6 +32,24 @@
 		<servlet-class>
 		controller.SignIn</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>
+		CreateTrip</display-name>
+		<servlet-name>CreateTrip</servlet-name>
+		<servlet-class>
+		controller.CreateTrip</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>
+		GetTrips</display-name>
+		<servlet-name>GetTrips</servlet-name>
+		<servlet-class>
+		controller.GetTrips</servlet-class>
+	</servlet>
   <servlet-mapping>
   	<servlet-name>Hello</servlet-name>
   	<url-pattern>/Hello</url-pattern>
@@ -39,5 +57,13 @@
   <servlet-mapping>
   	<servlet-name>SignIn</servlet-name>
   	<url-pattern>/SignIn</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CreateTrip</servlet-name>
+  	<url-pattern>/CreateTrip</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>GetTrips</servlet-name>
+  	<url-pattern>/GetTrips</url-pattern>
   </servlet-mapping>
 </web-app>
