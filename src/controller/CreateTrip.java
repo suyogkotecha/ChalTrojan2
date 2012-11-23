@@ -65,7 +65,7 @@ import com.mysql.jdbc.ResultSetMetaData;
 			ResultSetMetaData meta = (ResultSetMetaData) resultSet.getMetaData();
 			out.println(CreateXML.generateTripXML(resultSet,1));
 			con.close();
-			//out.println(CreateXML.generateXML(1, "success","CreateTrip"));
+			out.println(CreateXML.generateXML(1, "success","CreateTrip"));
 		}
 		catch(SQLException e)
 		{

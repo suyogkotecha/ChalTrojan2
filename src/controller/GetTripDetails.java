@@ -11,19 +11,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mysql.jdbc.ResultSetMetaData;
-
 /**
- * Servlet implementation class for Servlet: GetTrips
+ * Servlet implementation class for Servlet: GetTripDetails
  *
  */
- public class GetTrips extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
+ public class GetTripDetails extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
    static final long serialVersionUID = 1L;
    
     /* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#HttpServlet()
 	 */
-	public GetTrips() {
+	public GetTripDetails() {
 		super();
 	}   	
 	
@@ -34,25 +32,26 @@ import com.mysql.jdbc.ResultSetMetaData;
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
 		String handle = request.getParameter("handle");
-		String query ="select tripName from feedback.trip_owner where owner='"+handle+"' and active = 'Y'";
+		String tripName = request.getParameter("tripName");
+		String query = "select destName, tripDate, tripPwd, active from trip_owner where owner='"+handle+"'";
 		try
 		{
 			Connection con = db.Instance.returnConnection();
 			Statement statement = con.createStatement(); 
-			ResultSet resultSet = statement.executeQuery(query);				
-			out.println(CreateXML.generateTripXML(resultSet,1));
+			ResultSet resultSet = statement.executeQuery(query);			
+			out.println(CreateXML.generateTripDetailsXML(resultSet));
 			con.close();
 		}
 		catch(SQLException e)
 		{
-			out.println(CreateXML.generateXML(0, "DbProb","CreateTrip"));
+			out.println(CreateXML.generateXML(0, "DbProb","GetTripDetails"));
 			e.printStackTrace();
 		}
 		catch(Exception e)
 		{
+			out.println(CreateXML.generateXML(0, "Problem","GetTripDetails"));
 			e.printStackTrace();
 		}
-		
 	}  	
 	
 	/* (non-Java-doc)
