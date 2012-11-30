@@ -4,23 +4,16 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+//import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 //import java.rmi.RemoteException;
 //import java.rmi.registry.LocateRegistry;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import com.mysql.jdbc.ResultSetMetaData;
 /**
  * Servlet implementation class for Servlet: CreateTrip
  *
@@ -57,15 +50,15 @@ import com.mysql.jdbc.ResultSetMetaData;
 			Connection con = db.Instance.returnConnection();
 			Statement statement = con.createStatement(); 
 			String query = "insert into trip_owner (owner, tripName, destName, destLang, destLongi, tripDate, active, tripPwd) values ('"+handle+"','"+tripName+"','"+destinationName+"',"+Double.parseDouble(destLang)+","+Double.parseDouble(destLongi)+",'"+tripDate+"','Y','"+pwd+"')";
-			out.println(query);
+			//out.println(query);
 			update =statement.executeUpdate(query);						
-			query = "select tripName from feedback.trip_owner where owner='"+handle+"' and active = 'Y'";
+			query = "select idtrip_owner,tripName from feedback.trip_owner where owner='"+handle+"' and active = 'Y'";
 			ResultSet resultSet = statement.executeQuery(query);
 			
-			ResultSetMetaData meta = (ResultSetMetaData) resultSet.getMetaData();
+			//ResultSetMetaData meta = (ResultSetMetaData) resultSet.getMetaData();
 			out.println(CreateXML.generateTripXML(resultSet,1));
 			con.close();
-			out.println(CreateXML.generateXML(1, "success","CreateTrip"));
+			//out.println(CreateXML.generateXML(1, "success","CreateTrip"));
 		}
 		catch(SQLException e)
 		{

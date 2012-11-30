@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -11,16 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class for Servlet: TripUpdate
+ * Servlet implementation class for Servlet: LeaveTrip
  *
  */
- public class TripUpdate extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
+ public class LeaveTrip extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
    static final long serialVersionUID = 1L;
    
     /* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#HttpServlet()
 	 */
-	public TripUpdate() {
+	public LeaveTrip() {
 		super();
 	}   	
 	
@@ -31,37 +32,43 @@ import javax.servlet.http.HttpServletResponse;
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
 		String handle = request.getParameter("handle");
-		String tripName = request.getParameter("tripName");
-		String dest = request.getParameter("destName");
-		String destLang = request.getParameter("destLang");
-		String destLongi = request.getParameter("destLongi");
-		String date = request.getParameter("tripDate");
-		String pwd = request.getParameter("pwd");
-		String active = request.getParameter("active");
-
-		String id = request.getParameter("tripId");
-		String query = "update feedback.trip_owner set destName='"+dest+"', destLang='"+destLang+"', destLongi='"+destLongi+"', tripDate='"+date+"', active='"+active+"', tripPwd='"+pwd+"', tripName='"+tripName+"' where owner='"+handle+"' and idtrip_owner='"+id+"'";
+		String tripId = request.getParameter("tripId");
+		String query = "update feedback.trip set active=0 where tripid="+tripId+" and handle='"+handle+"'";
 		
+		//out.println(query);
+		Connection con = null;
 		try
-		{
-			Connection con = db.Instance.returnConnection();
+		{		
+			con = db.Instance.returnConnection();
 			Statement statement = con.createStatement();			
 			int update = statement.executeUpdate(query);
-			con.close();
-			if(update>0)
-				out.println(CreateXML.generateXML(1, "TripUpdated","TripUpdate"));
+			if(update==0)
+			{
+				out.println(CreateXML.generateXML(0, "DbProblem","LeaveTrip"));
+			}
 			else
-				out.println(CreateXML.generateXML(0, "TripCouldNotbeUpdated","TripUpdate"));
+			{
+				out.println(CreateXML.generateXML(1, "success","LeaveTrip"));
+			}
 		}
 		catch(SQLException e)
 		{
-			out.println(CreateXML.generateXML(0, "DbProb","TripUpdate"));
-			e.printStackTrace();
+			out.println(CreateXML.generateXML(0, "DbProblem","LeaveTrip"));
 		}
 		catch(Exception e)
 		{
-			out.println(CreateXML.generateXML(0, "Problem","TripUpdate"));
+			out.println(CreateXML.generateXML(0, "Problem","LeaveTrip"));
 			e.printStackTrace();
+		}
+		finally
+		{
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				out.println(CreateXML.generateXML(0, "DbProblem","LeaveTrip"));
+				e.printStackTrace();
+			}
 		}
 	}  	
 	

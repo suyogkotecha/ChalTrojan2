@@ -55,7 +55,7 @@ import com.mysql.jdbc.ResultSetMetaData;
 		int update = 0;
 		try
 		{
-			out.println("in handle");
+			//out.println("in handle");
 			
 			Connection con = db.Instance.returnConnection();
 			Statement statement = con.createStatement();

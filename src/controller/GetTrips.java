@@ -11,7 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mysql.jdbc.ResultSetMetaData;
+//import com.mysql.jdbc.ResultSetMetaData;
 
 /**
  * Servlet implementation class for Servlet: GetTrips
@@ -34,7 +34,8 @@ import com.mysql.jdbc.ResultSetMetaData;
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
 		String handle = request.getParameter("handle");
-		String query ="select tripName from feedback.trip_owner where owner='"+handle+"' and active = 'Y'";
+		String query ="select tripName,idtrip_owner from feedback.trip_owner where owner='"+handle+"' and active = 'Y'";
+		//out.println(query);
 		try
 		{
 			Connection con = db.Instance.returnConnection();

@@ -68,6 +68,24 @@
 		<servlet-class>
 		controller.TripUpdate</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>
+		JoinTrip</display-name>
+		<servlet-name>JoinTrip</servlet-name>
+		<servlet-class>
+		controller.JoinTrip</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>
+		LeaveTrip</display-name>
+		<servlet-name>LeaveTrip</servlet-name>
+		<servlet-class>
+		controller.LeaveTrip</servlet-class>
+	</servlet>
   <servlet-mapping>
   	<servlet-name>Hello</servlet-name>
   	<url-pattern>/Hello</url-pattern>
@@ -91,5 +109,13 @@
   <servlet-mapping>
   	<servlet-name>TripUpdate</servlet-name>
   	<url-pattern>/TripUpdate</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>JoinTrip</servlet-name>
+  	<url-pattern>/JoinTrip</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LeaveTrip</servlet-name>
+  	<url-pattern>/LeaveTrip</url-pattern>
   </servlet-mapping>
 </web-app>
