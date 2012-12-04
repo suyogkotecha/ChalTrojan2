@@ -42,6 +42,30 @@ public class CreateXML {
 		sb.append("</data></root>");
 		return sb.toString();
 	}
+	public static String getTripsXML(ResultSet rs, int success)
+	{
+		StringBuffer sb = new StringBuffer();
+		sb.append("<root><header><success>").append(1).append("</success><message>");
+		sb.append("ReturnTrips").append("</message><from>").append("ReturnTrips").append("</from></header><data>");
+		try
+		{
+			/*ResultSetMetaData meta = (ResultSetMetaData) rs.getMetaData();*/
+			/*int cols = meta.getColumnCount();
+			int i=0;*/
+			sb.append("<trips>");
+			while(rs.next())
+			{
+				sb.append("<trip id=\"").append(rs.getString("idtrip_owner")).append("\">").append(rs.getString("tripName")).append("</trip>");
+			}
+			sb.append("</trips>");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		sb.append("</data></root>");
+		return sb.toString();
+	}
 	public static String generateTripDetailsXML(ResultSet rs)
 	{
 		StringBuffer sb = new StringBuffer();
@@ -123,5 +147,60 @@ public class CreateXML {
 			}
 		}
 		return count;
+	}
+	public static String returnListHandles(ResultSet rs1, ResultSet rs2, String handle)
+	{
+		StringBuffer sb = new StringBuffer();
+		try
+		{
+			while(rs1.next())
+			{
+				
+				String res = rs1.getString("owner");
+				if(!res.equals(handle))
+					sb.append("'").append(res).append("',");
+			}
+			while(rs2.next())
+			{
+				String res = rs2.getString("handle");
+				if(!res.equals(handle))
+					sb.append("'").append(res).append("',");
+			}			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		if(sb.length()>0)
+		{
+			sb = new StringBuffer("(").append(sb.deleteCharAt(sb.length()-1));
+			sb.append(")");
+		}
+		return sb.toString();
+	}
+	public static String locationXML(ResultSet rs)
+	{
+		StringBuffer sb = new StringBuffer();
+		int size=0;
+		try
+		{
+			size++;
+			
+			while(rs.next())
+			{
+				sb.append("<location>");
+					sb.append("<handle>").append(rs.getString("handle")).append("</handle>");
+					sb.append("<lat>").append(rs.getDouble("lat")).append("</lat>");
+					sb.append("<long>").append(rs.getDouble("lng")).append("</long>");
+				sb.append("</location>");
+			}
+			sb.append("</locations>");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		sb = new StringBuffer("<locations size=\""+size+"\">").append(sb);
+		return sb.toString();
 	}
 }

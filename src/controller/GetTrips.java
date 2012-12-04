@@ -41,12 +41,12 @@ import javax.servlet.http.HttpServletResponse;
 			Connection con = db.Instance.returnConnection();
 			Statement statement = con.createStatement(); 
 			ResultSet resultSet = statement.executeQuery(query);				
-			out.println(CreateXML.generateTripXML(resultSet,1));
+			out.println(CreateXML.getTripsXML(resultSet,1));
 			con.close();
 		}
 		catch(SQLException e)
 		{
-			out.println(CreateXML.generateXML(0, "DbProb","CreateTrip"));
+			out.println(CreateXML.generateXML(0, "DbProb","GetTrips"));
 			e.printStackTrace();
 		}
 		catch(Exception e)

@@ -86,6 +86,24 @@
 		<servlet-class>
 		controller.LeaveTrip</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>
+		UpdateLocation</display-name>
+		<servlet-name>UpdateLocation</servlet-name>
+		<servlet-class>
+		controller.UpdateLocation</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>
+		GetLocation</display-name>
+		<servlet-name>GetLocation</servlet-name>
+		<servlet-class>
+		controller.GetLocation</servlet-class>
+	</servlet>
   <servlet-mapping>
   	<servlet-name>Hello</servlet-name>
   	<url-pattern>/Hello</url-pattern>
@@ -117,5 +135,13 @@
   <servlet-mapping>
   	<servlet-name>LeaveTrip</servlet-name>
   	<url-pattern>/LeaveTrip</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UpdateLocation</servlet-name>
+  	<url-pattern>/UpdateLocation</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>GetLocation</servlet-name>
+  	<url-pattern>/GetLocation</url-pattern>
   </servlet-mapping>
 </web-app>
