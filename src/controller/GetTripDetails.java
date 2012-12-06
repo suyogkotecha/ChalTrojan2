@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 		PrintWriter out = response.getWriter();
 		String handle = request.getParameter("handle");
 		String tripName = request.getParameter("tripName");
-		String query = "select destName, tripDate, tripPwd, active, destLang,destLongi from trip_owner where owner='"+handle+"' and tripName='"+tripName+"'";
+		String query = "select destName, tripDate, tripPwd, active, destLang,destLongi from trip_owner where tripName='"+tripName+"'";
 		try
 		{
 			Connection con = db.Instance.returnConnection();

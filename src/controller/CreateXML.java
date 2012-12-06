@@ -111,7 +111,7 @@ public class CreateXML {
 	}
 	public static boolean userPresent(PrintWriter out, String handle, String table, String tripId, String className)
 	{
-		String query = "select count(*) from feedback."+table+" where handle='"+handle+"' and tripid="+tripId;
+		String query = "select count(*) from feedback."+table+" where handle='"+handle+"' and tripid in (select idtrip_owner from trip_owner where tripName='"+tripId+"')";
 		if(returnCount(query, className,out)==1)
 			return true;
 		else
@@ -221,25 +221,29 @@ public class CreateXML {
 		{
 			while(rs.next())
 			{
-				sb.append("<trip id=\"").append(rs.getString("idtrip_owner")).append("\">");
+				sb.append("<trip>");				
+				sb.append("<id>").append(rs.getString("idtrip_owner")).append("</id>");
+				sb.append("<tripName>").append(rs.getString("tripName")).append("</tripName>");
 				sb.append("<destName>").append(rs.getString("destName")).append("</destName>");
 				sb.append("<tripDate>").append(rs.getString("tripDate")).append("</tripDate>");
 				sb.append("<tripPwd>").append(rs.getString("tripPwd")).append("</tripPwd>");
 				sb.append("<active>").append(rs.getString("active")).append("</active>");
 				sb.append("<lang>").append(rs.getDouble("destLang")).append("</lang>");
-				sb.append("<long>").append(rs.getDouble("destLang")).append("</long>");
+				sb.append("<long>").append(rs.getDouble("destLongi")).append("</long>");
 				sb.append("</trip>");
 			}
 			sb.append("</owned><joined>");
 			while(rs1.next())
 			{
-				sb.append("<trip id=\"").append(rs1.getString("idtrip_owner")).append("\">");
+				sb.append("<trip>");
+				sb.append("<id>").append(rs1.getString("idtrip_owner")).append("</id>");
+				sb.append("<tripName>").append(rs1.getString("tripName")).append("</tripName>");
 				sb.append("<destName>").append(rs1.getString("destName")).append("</destName>");
 				sb.append("<tripDate>").append(rs1.getString("tripDate")).append("</tripDate>");
 				sb.append("<tripPwd>").append(rs1.getString("tripPwd")).append("</tripPwd>");
 				sb.append("<active>").append(rs1.getString("active")).append("</active>");
 				sb.append("<lang>").append(rs1.getDouble("destLang")).append("</lang>");
-				sb.append("<long>").append(rs1.getDouble("destLang")).append("</long>");
+				sb.append("<long>").append(rs1.getDouble("destLongi")).append("</long>");
 				sb.append("</trip>");
 			}						
 			sb.append("</joined>");

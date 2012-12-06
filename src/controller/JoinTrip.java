@@ -43,7 +43,7 @@ import com.mysql.jdbc.ResultSetMetaData;
 		int colCount=0;
 		try
 		{
-			String query="select count(*) from trip_owner where idtrip_owner = "+tripId+" and tripPwd='"+pwd+"'";
+			String query="select count(*) from trip_owner where tripName = '"+tripId+"' and tripPwd='"+pwd+"'";
 			Connection con = db.Instance.returnConnection();
 			Statement statement = con.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
@@ -80,7 +80,7 @@ import com.mysql.jdbc.ResultSetMetaData;
 			{
 				//update; make it active
 				Connection con = null;
-				String query="update feedback.trip set active=1 where tripId="+tripId+" and handle='"+handle+"'";
+				String query="update feedback.trip set active=1 where tripId in (select idtrip_owner from trip_owner where tripName='"+tripId+"') and handle='"+handle+"'";
 				try
 				{		
 					con = db.Instance.returnConnection();
@@ -133,10 +133,11 @@ import com.mysql.jdbc.ResultSetMetaData;
 		int update=0;
 		try
 		{
-			String query1 = "INSERT INTO trip(tripid, handle,active) values ("+tripId+",'"+handle+"',1)";
+			String query1 = "INSERT INTO trip(tripid, handle,active) values ( (select idtrip_owner from trip_owner where tripName='"+tripId+"'),'"+handle+"',1)";
 			//out.println(query1);
 			con = db.Instance.returnConnection();
 			Statement statement = con.createStatement();
+			//out.println(query1);
 			update = statement.executeUpdate(query1);
 			if(update==0)
 			{
