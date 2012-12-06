@@ -14,6 +14,7 @@ public class CreateXML {
 	public static String generateXML(int success, String message, String from)
 	{
 		StringBuffer sb = new StringBuffer();
+		sb.append("<?xml version=\"1.0\"?>");
 		sb.append("<root><header><success>").append(success).append("</success><message>");
 		sb.append(message).append("</message><from>").append(from).append("</from></header><data></data></root>");
 		return sb.toString();
@@ -21,6 +22,7 @@ public class CreateXML {
 	public static String generateTripXML(ResultSet rs, int success)
 	{
 		StringBuffer sb = new StringBuffer();
+		sb.append("<?xml version=\"1.0\"?>");
 		sb.append("<root><header><success>").append(1).append("</success><message>");
 		sb.append("TripCreated").append("</message><from>").append("CreateTrip").append("</from></header><data>");
 		try
@@ -45,6 +47,7 @@ public class CreateXML {
 	public static String getTripsXML(ResultSet rs, int success)
 	{
 		StringBuffer sb = new StringBuffer();
+		sb.append("<?xml version=\"1.0\"?>");
 		sb.append("<root><header><success>").append(1).append("</success><message>");
 		sb.append("ReturnTrips").append("</message><from>").append("ReturnTrips").append("</from></header><data>");
 		try
@@ -69,6 +72,7 @@ public class CreateXML {
 	public static String generateTripDetailsXML(ResultSet rs)
 	{
 		StringBuffer sb = new StringBuffer();
+		sb.append("<?xml version=\"1.0\"?>");
 		sb.append("<root><header><success>").append(1).append("</success><message>");
 		sb.append("TripDetails").append("</message><from>").append("GetTripDetails").append("</from></header><data>");
 		
@@ -80,11 +84,16 @@ public class CreateXML {
 			sb.append("<tripDate>").append(rs.getString("tripDate")).append("</tripDate>");
 			sb.append("<tripPwd>").append(rs.getString("tripPwd")).append("</tripPwd>");
 			sb.append("<active>").append(rs.getString("active")).append("</active>");
+			sb.append("<lang>").append(rs.getDouble("destLang")).append("</lang>");
+			sb.append("<long>").append(rs.getDouble("destLang")).append("</long>");
+			
+			
 			sb.append("</Details>");
 		}
 		catch(Exception e)
 		{
 			sb = new StringBuffer();
+			sb.append("<?xml version=\"1.0\"?>");
 			sb.append("<root><header><success>").append(0).append("</success><message>");
 			sb.append("TripDetails").append("</message><from>").append("GetTripDetails").append("</from></header><data>");
 			e.printStackTrace();
@@ -181,6 +190,7 @@ public class CreateXML {
 	public static String locationXML(ResultSet rs)
 	{
 		StringBuffer sb = new StringBuffer();
+		
 		int size=0;
 		try
 		{
@@ -194,13 +204,52 @@ public class CreateXML {
 					sb.append("<long>").append(rs.getDouble("lng")).append("</long>");
 				sb.append("</location>");
 			}
-			sb.append("</locations>");
+			
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		sb = new StringBuffer("<locations size=\""+size+"\">").append(sb);
+		
+		sb = new StringBuffer("<?xml version=\"1.0\"?><root><header><success>1</success><message>Location</message><from>GetLocation</from></header><data><locations>").append(sb).append("</locations></data></root>");
+		return sb.toString();
+	}
+	public static String generateTripAllDetailsXML(ResultSet rs,ResultSet rs1)
+	{
+		StringBuffer sb = new StringBuffer("<?xml version=\"1.0\"?><root><header><success>1</success><message>AllDetails</message><from>AllDetails</from></header><data><trips><owned>");
+		try
+		{
+			while(rs.next())
+			{
+				sb.append("<trip id=\"").append(rs.getString("idtrip_owner")).append("\">");
+				sb.append("<destName>").append(rs.getString("destName")).append("</destName>");
+				sb.append("<tripDate>").append(rs.getString("tripDate")).append("</tripDate>");
+				sb.append("<tripPwd>").append(rs.getString("tripPwd")).append("</tripPwd>");
+				sb.append("<active>").append(rs.getString("active")).append("</active>");
+				sb.append("<lang>").append(rs.getDouble("destLang")).append("</lang>");
+				sb.append("<long>").append(rs.getDouble("destLang")).append("</long>");
+				sb.append("</trip>");
+			}
+			sb.append("</owned><joined>");
+			while(rs1.next())
+			{
+				sb.append("<trip id=\"").append(rs1.getString("idtrip_owner")).append("\">");
+				sb.append("<destName>").append(rs1.getString("destName")).append("</destName>");
+				sb.append("<tripDate>").append(rs1.getString("tripDate")).append("</tripDate>");
+				sb.append("<tripPwd>").append(rs1.getString("tripPwd")).append("</tripPwd>");
+				sb.append("<active>").append(rs1.getString("active")).append("</active>");
+				sb.append("<lang>").append(rs1.getDouble("destLang")).append("</lang>");
+				sb.append("<long>").append(rs1.getDouble("destLang")).append("</long>");
+				sb.append("</trip>");
+			}						
+			sb.append("</joined>");
+			
+		}		
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		sb.append("</trips></data></root>");
 		return sb.toString();
 	}
 }

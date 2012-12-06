@@ -104,6 +104,15 @@
 		<servlet-class>
 		controller.GetLocation</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>
+		AllDetails</display-name>
+		<servlet-name>AllDetails</servlet-name>
+		<servlet-class>
+		controller.AllDetails</servlet-class>
+	</servlet>
   <servlet-mapping>
   	<servlet-name>Hello</servlet-name>
   	<url-pattern>/Hello</url-pattern>
@@ -143,5 +152,9 @@
   <servlet-mapping>
   	<servlet-name>GetLocation</servlet-name>
   	<url-pattern>/GetLocation</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AllDetails</servlet-name>
+  	<url-pattern>/AllDetails</url-pattern>
   </servlet-mapping>
 </web-app>

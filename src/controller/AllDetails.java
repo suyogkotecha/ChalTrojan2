@@ -12,16 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class for Servlet: GetTripDetails
+ * Servlet implementation class for Servlet: AllDetails
  *
  */
- public class GetTripDetails extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
+ public class AllDetails extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
    static final long serialVersionUID = 1L;
    
     /* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#HttpServlet()
 	 */
-	public GetTripDetails() {
+	public AllDetails() {
 		super();
 	}   	
 	
@@ -32,24 +32,25 @@ import javax.servlet.http.HttpServletResponse;
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
 		String handle = request.getParameter("handle");
-		String tripName = request.getParameter("tripName");
-		String query = "select destName, tripDate, tripPwd, active, destLang,destLongi from trip_owner where owner='"+handle+"' and tripName='"+tripName+"'";
 		try
 		{
+			String query1 = "select tripName,idtrip_owner,destName, tripDate, tripPwd, active, destLang,destLongi from feedback.trip_owner where owner='"+handle+"' and active = 'Y'"; 
 			Connection con = db.Instance.returnConnection();
 			Statement statement = con.createStatement(); 
-			ResultSet resultSet = statement.executeQuery(query);			
-			out.println(CreateXML.generateTripDetailsXML(resultSet));
+			ResultSet resultSet = statement.executeQuery(query1);
+			
+			String query2 = "select tripName,idtrip_owner,destName, tripDate, tripPwd, active, destLang,destLongi from feedback.trip_owner where idtrip_owner in (select tripid from trip where handle ='"+handle+"') and active = 'Y'; ";
+			ResultSet rs2 = con.createStatement().executeQuery(query2);
+			out.println(CreateXML.generateTripAllDetailsXML(resultSet, rs2));
 			con.close();
 		}
 		catch(SQLException e)
 		{
-			out.println(CreateXML.generateXML(0, "DbProb","GetTripDetails"));
+			out.println(CreateXML.generateXML(0, "DbProb","AllTrips"));
 			e.printStackTrace();
 		}
 		catch(Exception e)
 		{
-			out.println(CreateXML.generateXML(0, "Problem","GetTripDetails"));
 			e.printStackTrace();
 		}
 	}  	
